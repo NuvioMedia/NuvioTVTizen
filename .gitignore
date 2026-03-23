@@ -1,0 +1,3 @@
+*.tgz
+*.zip
+node_modules/
