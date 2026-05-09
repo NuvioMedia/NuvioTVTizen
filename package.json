@@ -1,6 +1,6 @@
 {
   "name": "Nuvio TV",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "type": "module",
   "description": "Hosted TizenBrew wrapper for Nuvio TV",
   "packageType": "app",
