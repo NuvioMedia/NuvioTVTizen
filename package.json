@@ -7,11 +7,16 @@
   "appName": "Nuvio TV",
   "appPath": "app/index.html",
   "keys": [
+    "Back",
+    "Return",
     "MediaPlay",
     "MediaPause",
     "MediaPlayPause",
+    "MediaStop",
     "MediaFastForward",
-    "MediaRewind"
+    "MediaRewind",
+    "MediaTrackPrevious",
+    "MediaTrackNext"
   ],
   "evaluateScriptOnDocumentStart": false,
   "files": [

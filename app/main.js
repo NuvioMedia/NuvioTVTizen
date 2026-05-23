@@ -15,7 +15,18 @@
   }
 
   if (tvInput && typeof tvInput.registerKey === "function") {
-    ["MediaPlay", "MediaPause", "MediaPlayPause", "MediaFastForward", "MediaRewind"].forEach(function registerKey(keyName) {
+    [
+      "Back",
+      "Return",
+      "MediaPlay",
+      "MediaPause",
+      "MediaPlayPause",
+      "MediaStop",
+      "MediaFastForward",
+      "MediaRewind",
+      "MediaTrackPrevious",
+      "MediaTrackNext"
+    ].forEach(function registerKey(keyName) {
       try {
         tvInput.registerKey(keyName);
       } catch (_) {}
