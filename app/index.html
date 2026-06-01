@@ -4,9 +4,142 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta http-equiv="refresh" content="2;url=https://web.nuvioapp.space/?source=tizenbrew&wrapper=tizen" />
   <title>Nuvio TV</title>
+  <style>
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      background: #05070b;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    main {
+      max-width: 720px;
+      padding: 48px;
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      font-size: 56px;
+      font-weight: 700;
+    }
+
+    p {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.4;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    a {
+      color: #7cc7ff;
+    }
+  </style>
+  <script>
+    (function openHostedNuvioTv() {
+      var hostedAppUrl = "https://web.nuvioapp.space/";
+      var tvInput = window.tizen && window.tizen.tvinputdevice;
+      var launchUrl = buildFreshHostedUrl();
+      var hasAttemptedLaunch = false;
+
+      function buildFreshHostedUrl() {
+        try {
+          var url = new URL(hostedAppUrl);
+          url.searchParams.set("source", "tizenbrew");
+          url.searchParams.set("wrapper", "tizen");
+          url.searchParams.set("_cb", String(Date.now()));
+          return url.toString();
+        } catch (_) {
+          return hostedAppUrl + "?source=tizenbrew&wrapper=tizen&_cb=" + encodeURIComponent(String(Date.now()));
+        }
+      }
+
+      function registerKey(keyName) {
+        if (!tvInput || typeof tvInput.registerKey !== "function") {
+          return;
+        }
+
+        try {
+          tvInput.registerKey(keyName);
+        } catch (_) {}
+      }
+
+      function openFallbackLink() {
+        var fallbackLink = document.getElementById("fallback-link");
+        if (!fallbackLink) {
+          return;
+        }
+
+        fallbackLink.href = launchUrl;
+
+        try {
+          fallbackLink.click();
+        } catch (_) {}
+      }
+
+      function launchHostedApp() {
+        if (hasAttemptedLaunch) {
+          return;
+        }
+
+        hasAttemptedLaunch = true;
+
+        [
+          "Back",
+          "Return",
+          "MediaPlay",
+          "MediaPause",
+          "MediaPlayPause",
+          "MediaStop",
+          "MediaFastForward",
+          "MediaRewind",
+          "MediaTrackPrevious",
+          "MediaTrackNext"
+        ].forEach(registerKey);
+
+        try {
+          window.location.replace(launchUrl);
+        } catch (_) {}
+
+        window.setTimeout(function retryWithHref() {
+          if (String(window.location.href || "").indexOf("web.nuvioapp.space") === -1) {
+            try {
+              window.location.href = launchUrl;
+            } catch (_) {}
+          }
+        }, 150);
+
+        window.setTimeout(function retryWithAnchor() {
+          if (String(window.location.href || "").indexOf("web.nuvioapp.space") === -1) {
+            openFallbackLink();
+          }
+        }, 400);
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", launchHostedApp, { once: true });
+      } else {
+        launchHostedApp();
+      }
+
+      window.setTimeout(launchHostedApp, 0);
+    }());
+  </script>
 </head>
 <body>
-  <script src="main.js"></script>
+  <main>
+    <h1>Opening Nuvio TV</h1>
+    <p>If nothing happens, use <a id="fallback-link" href="https://web.nuvioapp.space/?source=tizenbrew&wrapper=tizen">this fallback link</a>.</p>
+  </main>
 </body>
 </html>
