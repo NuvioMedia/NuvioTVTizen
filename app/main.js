@@ -45,8 +45,6 @@
     hasAttemptedLaunch = true;
 
     [
-      "Back",
-      "Return",
       "MediaPlay",
       "MediaPause",
       "MediaPlayPause",
