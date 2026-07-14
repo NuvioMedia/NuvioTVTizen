@@ -7,8 +7,6 @@
   "appName": "Nuvio TV",
   "appPath": "app/index.html",
   "keys": [
-    "Back",
-    "Return",
     "MediaPlay",
     "MediaPause",
     "MediaPlayPause",
